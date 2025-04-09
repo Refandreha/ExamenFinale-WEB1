@@ -9,20 +9,28 @@
 </head>
 
 <body>
+    
     <header class="header">
-        <h1>Typing Test</h1>
-        <nav class="header-navbar">
-            <label for="mode" class="header-navbar-text">Select Mode:</label>
-            <select id="mode" class="header-navbar-mode">
-                <option value="easy">Easy</option>
-                <option value="medium">Medium</option>
-                <option value="hard">Hard</option>
-            </select>
+        <nav class="navbar">
+            <h1>Typing Test</h1>
+            <div class="header-navbar">
+                <ul>
+                    <li><a href="home.html" class="home">ACCUEIL</a></li>
+                    <li>TYPING GO</li>
+                    <li>AUTRE</li>
+                </ul>
+            </div>       
         </nav>
     </header>
-    <nav class="navbar">
-        <h1>ccccccccccc</h1>
-    </nav>
+    <div>
+        <label for="mode" class="header-navbar-text">Select Mode:</label>
+        <select id="mode" class="header-navbar-mode">
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+    </div>
+    <div class="option">
     <main class="main">
         <p id="word-display"></p>
         <input type="text" id="input-field" autofocus>
