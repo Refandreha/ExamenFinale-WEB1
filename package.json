@@ -7,6 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
+<<<<<<< HEAD
   "author": "Daniela (STD24103) & Ranto(STD24122)",
+=======
+  "author": "Daniela (STD24103) & Ranto(STD24***)",
+>>>>>>> 80ac2281194fbb747727bd8df2cfe0105d4e3336
   "license": "ISC"
 }
