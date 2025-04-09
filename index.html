@@ -9,34 +9,65 @@
 </head>
 
 <body>
-    
     <header class="header">
-        <nav class="navbar">
-            <h1>Typing Test</h1>
-            <div class="header-navbar">
-                <ul>
-                    <li><a href="home.html" class="home">ACCUEIL</a></li>
-                    <li>TYPING GO</li>
-                    <li>AUTRE</li>
-                </ul>
-            </div>       
+        <h1>Typing Test</h1>
+        <nav class="header-navbar">
+            <label for="mode" class="header-navbar-text">Select Mode:</label>
+            <select id="mode" class="header-navbar-mode">
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
         </nav>
     </header>
-    <div>
-        <label for="mode" class="header-navbar-text">Select Mode:</label>
-        <select id="mode" class="header-navbar-mode">
-            <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
-            <option value="hard">Hard</option>
-        </select>
-    </div>
-    <div class="option">
+    <nav class="navbar">
+        <h1>ccccccccccc</h1>
+    </nav>
     <main class="main">
         <p id="word-display"></p>
         <input type="text" id="input-field" autofocus>
         <p id="results">Results : </p>
     </main>
 
+    <div class="keyboard">
+        <div class="row">
+            <button data-key="a">a</button>
+            <button data-key="z">z</button>
+            <button data-key="e">e</button>
+            <button data-key="r">r</button>
+            <button data-key="t">t</button>
+            <button data-key="y">y</button>
+            <button data-key="u">u</button>
+            <button data-key="i">i</button>
+            <button data-key="o">o</button>
+            <button data-key="p">p</button>
+        </div>
+        <div class="row">
+            <button data-key="q">q</button>
+            <button data-key="s">s</button>
+            <button data-key="d">d</button>
+            <button data-key="f">f</button>
+            <button data-key="g">g</button>
+            <button data-key="h">h</button>
+            <button data-key="j">j</button>
+            <button data-key="k">k</button>
+            <button data-key="l">l</button>
+            <button data-key="m">m</button>
+        </div>
+        <div class="row1">
+            <button class="special1" data-key="shift">Shift</button>
+            <button data-key="w">w</button>
+            <button data-key="x">x</button>
+            <button data-key="c">c</button>
+            <button data-key="v">v</button>
+            <button data-key="b">b</button>
+            <button data-key="n">n</button>
+            <button class="special2" data-key="backspace">Backspace</button>
+        </div>
+        <div class="row2">
+            <button class="space" data-key=" ">Space</button>
+        </div>
+    </div>
     <script src="js/script.js"></script>
 </body>
 

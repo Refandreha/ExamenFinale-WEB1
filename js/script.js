@@ -104,3 +104,22 @@ modeSelect.addEventListener("change", () => startTest());
 
 // Start the test
 startTest();
+
+//Code of keyboard
+const keyboard = document.querySelector(".keyboard");
+const keys = keyboard.querySelectorAll("button");
+
+document.addEventListener("keydown", (event) => {
+const keyPressed = event.key.toLowerCase();
+
+keys.forEach(keyElement => {
+    const dataKey = keyElement.dataset.key.toLowerCase();
+
+    if (keyPressed === dataKey) {
+        keyElement.classList.add("active");
+        setTimeout(() => {
+            keyElement.classList.remove("active");
+        }, 100);
+    }
+});
+})
