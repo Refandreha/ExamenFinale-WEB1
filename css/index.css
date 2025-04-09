@@ -1,6 +1,7 @@
 * {
     padding: 0;
     margin: 0;
+    font-family: sans-serif;
 }
 body {
     background-color: rgb(142, 80, 204);
@@ -31,4 +32,44 @@ body {
 }
 .main {
     margin-top: 200px;
+}
+.keyboard {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-inline: 500px;
+}
+.row {
+    display: flex;
+    gap: 5px;
+}
+.row1 {
+    display: flex;
+    gap: 5px;
+    margin-inline: 10px;
+}
+button {
+    padding: 15px 20px;
+    font-size: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #eee;
+}
+button.special1 {
+    padding: 10px 15px;
+    font-size: 15px;
+    margin-left: 10px;
+}
+button.special2 {
+    padding: 10px 15px;
+    font-size: 15px;
+    margin-right: 10px;
+}
+button.space {
+    width: 75%;
+    margin-inline: 53px;
+}
+button.active {
+    background-color: rgb(142, 80, 204);;
 }
