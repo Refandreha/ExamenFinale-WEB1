@@ -4,7 +4,10 @@
     font-family: sans-serif;
 }
 body {
-    background-color: rgb(142, 80, 204);
+    min-height: 100vh;
+    background-image: url('C:/Users/ThorJr/ExamenFinale-WEB1/asset/photo/index.jpg');
+    background-size: 125%;
+    backdrop-filter: blur(100px);
 }
 .header {
     margin-top: 10px;
@@ -12,17 +15,33 @@ body {
     flex-direction: row;
 }
 .header-navbar {
-    background-color: rgba(148, 147, 147, 0.575);
+    background-color: rgba(255, 255, 255, 0.158);
     margin-left: 40px;
-    border-radius: 20px;
+    border-radius: 10vh;
+    box-shadow: 2px 5px #fc00009a;
+    margin-top: 0vh;
+   
 }
 .header-navbar-text {
-    padding-top: 10px;
+    margin-top: 1.5vh; 
+    margin-left: 2vw;
+    margin-right: 1vw;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #ffffff;
+    font-weight: bolder;
+    border-color: #b30202;
+    
 }
 .header-navbar-mode {
-    background-color: rgba(148, 147, 147, 0.575);
-    margin-top: 10px;
-    border-radius: 20px;
+    background-color: rgba(148, 147, 147, 0.253);
+    margin-top: 1.5vh;
+    margin-right: 2vw;
+    border-radius: 20vh;
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
+    padding-top: 0.5vh;
+    padding-bottom: 0.5vh;
+    margin-bottom: 1.5vh;
 }
 .navbar {
     background-color: rgba(148, 147, 147, 0.575);
@@ -72,4 +91,42 @@ button.space {
 }
 button.active {
     background-color: rgb(142, 80, 204);;
+}
+.fa-solid{
+    margin-top: 2vh;
+    font-size: 25px;
+    position: absolute;
+    margin-left: 70%;
+    color: aliceblue;
+    
+}
+.fa-crown{
+    margin-top: 1.5vh;
+    font-size: 25px;
+    position: absolute;
+    margin-left: 75%;
+    color: aliceblue;
+}
+.fa-wrench{
+    margin-top: 1.8vh;
+    font-size: 21px;
+    position: absolute;
+    margin-left: 80%;
+    color: aliceblue;
+}
+.logo{
+    border-radius: 50%;
+    height: 3%;
+    width: 3%;
+    filter: none;
+    margin-left: 20vw;
+    margin-top: 1vh;
+    object-fit: contain;
+}
+h1{
+    margin-left: 1.5vw;
+    font-size: 40px;
+    color: aliceblue;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-shadow:3px 1px #b30202;
 }
