@@ -50,13 +50,33 @@ body {
     border-radius: 20px;
 }
 .main {
-    margin-top: 200px;
+    margin-top: 50px;
+    margin-left: 10vw;
+    margin-right: 10vw;
+    color: #eee;
+    font-size: 150%;
+    text-align: center;
 }
+input{
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    padding-left: 1vw;
+    border-radius: 20vh;
+    border-color: blue;
+    color: white;
+    background-color: rgba(0, 0, 255, 0.144);
+    font-size: 25px;
+}
+
+
 .keyboard {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    margin-inline: 500px;
+    gap: 3px;
+    margin-inline: 400px;
+    color: rgba(255, 0, 200, 0.753);
 }
 .row {
     display: flex;
