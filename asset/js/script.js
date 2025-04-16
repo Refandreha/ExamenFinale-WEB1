@@ -21,7 +21,7 @@ const accuracy_html = document.getElementById("accuracy");
 const correct = document.getElementById("correct");
 const incorrect = document.getElementById("incorrect");
 const startButton = document.getElementById("start-button");
-const restartBUtton = document.getElementById("restart-button");
+const restartButton = document.getElementById("restart-button");
 
 const words = {
     easy: ["apple", "banana", "grape", "orange", "cherry"],
@@ -65,8 +65,12 @@ const updateWord = (event) => {
     currentWords.forEach((word, index) => {
         const span = document.createElement("span");
         span.textContent = word + " ";
+        wordDisplay.appendChild(span);
+        let wordCorrect = 0;
         if (typedWords[index] && typedWords[index === word]) {
-            span.classList.add("correct");
+            typedWords.style.color = "yellow";
+            wordCorrect++;
+            correct.textContent = wordCorrect
         } else if (typedWords[index]) {
             span.classList.add("incorrect");
         }
@@ -105,11 +109,15 @@ const startTest = () => {
     countdownInterval = setInterval(() => {
         timeLeft--;
         timerDisplay.textContent = timeLeft;
-        if (timeLeft <= 0) {
+        if (timeLeft === 0) {
             clearInterval(countdownInterval);
             endTest();
         }
-        if (timeLeft <= 10) timerDisplay.style.color = "red";
+        if (timeLeft <= 10) {
+            timerDisplay.style.color = "red";
+        } else {
+            timerDisplay.style.color = "";
+        }
     }, 1000);
 }
 
@@ -178,7 +186,7 @@ modeSelect.addEventListener("change", () => {
 });
 
 startButton.addEventListener("click", startTest);
-restartBUtton.addEventListener("click", startTest);
+restartButton.addEventListener("click", startTest);
 
 if (localStorage.getItem("mode")) {
     modeSelect.value = localStorage.getItem("mode");

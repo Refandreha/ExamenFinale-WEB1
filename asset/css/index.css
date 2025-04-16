@@ -90,7 +90,7 @@ input{
     font-size: 25px;
 }
 .correct {
-    color: green;
+    color: rgb(70, 73, 70);
 }
 .incorrect {
     color: red
