@@ -4,10 +4,11 @@
     font-family: sans-serif;
 }
 body {
+    background: linear-gradient(to right, #000000, #272523);
     min-height: 100vh;
-    background-image: url('C:/Users/ThorJr/ExamenFinale-WEB1/asset/photo/index.jpg');
-    background-size: 125%;
-    backdrop-filter: blur(100px);
+    /*background-image: url('C:/Users/ThorJr/ExamenFinale-WEB1/asset/photo/index.jpg');
+    /*background-size: 125%;
+    /*backdrop-filter: blur(100px);*/
 }
 .header {
     margin-top: 10px;
@@ -15,12 +16,18 @@ body {
     flex-direction: row;
 }
 .header-navbar {
-    background-color: rgba(255, 255, 255, 0.158);
     margin-left: 40px;
     border-radius: 10vh;
-    box-shadow: 2px 5px #fc00009a;
+    padding-left: 0.3vw;
+    padding-right: 0.3vw;
     margin-top: 0vh;
-   
+    background-color: #9e02b305;
+    box-shadow:1px 2px #b30202;
+    border-radius: 10vh;
+}
+select{
+    color: #ffffff; /* Couleur du texte */
+    
 }
 .header-navbar-text {
     margin-top: 1.5vh; 
@@ -60,7 +67,7 @@ body {
 input{
     padding-top: 1vh;
     padding-bottom: 1vh;
-    margin-top: 1vh;
+    margin-top: 10vh;
     margin-bottom: 1vh;
     padding-left: 1vw;
     border-radius: 20vh;
@@ -76,7 +83,8 @@ input{
     flex-direction: column;
     gap: 3px;
     margin-inline: 400px;
-    color: rgba(255, 0, 200, 0.753);
+    
+    
 }
 .row {
     display: flex;
@@ -110,7 +118,7 @@ button.space {
     margin-inline: 53px;
 }
 button.active {
-    background-color: rgb(142, 80, 204);;
+    background-color: rgba(255, 0, 0, 0.829);
 }
 .fa-solid{
     margin-top: 2vh;
@@ -118,7 +126,9 @@ button.active {
     position: absolute;
     margin-left: 70%;
     color: aliceblue;
-    
+}
+.fa-solid:hover{
+    color: rgb(255, 0, 0);
 }
 .fa-crown{
     margin-top: 1.5vh;
@@ -132,6 +142,13 @@ button.active {
     font-size: 21px;
     position: absolute;
     margin-left: 80%;
+    color: aliceblue;
+}
+.fa-arrows-rotate{
+    margin-top: 2vh;
+    font-size: 30px;
+    position: absolute;
+    margin-left: 11%;
     color: aliceblue;
 }
 .logo{
