@@ -4,16 +4,10 @@
     font-family: sans-serif;
 }
 body {
-    background: linear-gradient(to right, #000000, #272523);
+    background: black;
     min-height: 100vh;
-<<<<<<< HEAD
     background-size: 125%;
     backdrop-filter: blur(100px);
-=======
-    /*background-image: url('C:/Users/ThorJr/ExamenFinale-WEB1/asset/photo/index.jpg');
-    /*background-size: 125%;
-    /*backdrop-filter: blur(100px);*/
->>>>>>> RantoSTD24122
 }
 #word-display {
     font-size: 1.5em;
@@ -30,11 +24,26 @@ body {
     color: white;
 }
 #timer {
-    font-size: 1.2em;
-    margin-bottom: 10px;
+    font-size: 1.8em;
+    margin-bottom: 0px;
+    position: absolute;
+    top: 28vh;
+    left: 15vw;
+}
+#start-button{
+    color: #eee;
+    font-weight: bolder;
+    font-size: 0.5em;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: large; 
+    border: 0px;
+    box-shadow:3px 3px  #b30202;
+    background-color: rgba(0, 0, 0, 0.288);
+    border-radius: 10vh;
 }
 #results {
-    margin-top: 20px;
+    margin-top: 0px;
+    margin-bottom: 1vh;
 }
 .header {
     margin-top: 10px;
@@ -93,14 +102,14 @@ select{
 input{
     padding-top: 1vh;
     padding-bottom: 1vh;
-    margin-top: 10vh;
+    margin-top: 0vh;
     margin-bottom: 1vh;
     padding-left: 1vw;
     border-radius: 20vh;
     border-color: blue;
     color: white;
     background-color: rgba(0, 0, 255, 0.144);
-    font-size: 25px;
+    font-size: 20px;
 }
 .correct {
     color: rgb(70, 73, 70);
@@ -159,15 +168,15 @@ button.space {
 button.active {
     background-color: rgba(255, 0, 0, 0.829);
 }
-.fa-solid{
+.fa-keyboard{
     margin-top: 2vh;
     font-size: 25px;
     position: absolute;
     margin-left: 70%;
     color: aliceblue;
 }
-.fa-solid:hover{
-    color: rgb(255, 0, 0);
+.fa-keyboard:hover{
+    color: #b30202;
 }
 .fa-crown{
     margin-top: 1.5vh;
@@ -176,6 +185,9 @@ button.active {
     margin-left: 75%;
     color: aliceblue;
 }
+.fa-crown:hover{
+    color: #b30202;
+}
 .fa-wrench{
     margin-top: 1.8vh;
     font-size: 21px;
@@ -183,12 +195,18 @@ button.active {
     margin-left: 80%;
     color: aliceblue;
 }
+.fa-wrench:hover{
+    color: #b30202;
+}
 .fa-arrows-rotate{
     margin-top: 2vh;
     font-size: 30px;
     position: absolute;
-    margin-left: 11%;
+    margin-left: 27%;
     color: aliceblue;
+}
+.fa-arrows-rotate:hover{
+    color: #b30202;
 }
 .logo{
     border-radius: 50%;

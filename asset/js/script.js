@@ -103,7 +103,7 @@ const startTest = () => {
     inputField.value = "";
     inputField.focus();
     results.classList.add("hidden");
-    timeLeft = 60;
+    timeLeft = 5;
     timerDisplay.textContent = timeLeft;
     clearInterval(countdownInterval);
     countdownInterval = setInterval(() => {
