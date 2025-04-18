@@ -8,11 +8,20 @@
 let startTime = null, previousEndTime = null;
 let currentWordIndex = 0;
 const wordsToType = [];
+let timeLeft = 60;
+let countdownInterval;
 
 const modeSelect = document.getElementById("mode");
 const wordDisplay = document.getElementById("word-display");
 const inputField = document.getElementById("input-field");
+const timerDisplay = document.getElementById("timer");
 const results = document.getElementById("results");
+const wpm_html = document.getElementById("wpm");
+const accuracy_html = document.getElementById("accuracy");
+const correct = document.getElementById("correct");
+const incorrect = document.getElementById("incorrect");
+const startButton = document.getElementById("start-button");
+const restartButton = document.getElementById("restart-button");
 
 const words = {
     easy: ["apple", "banana", "grape", "orange", "cherry"],
@@ -26,83 +35,167 @@ const getRandomWord = (mode) => {
     return wordList[Math.floor(Math.random() * wordList.length)];
 };
 
-// Initialize the typing test
-const startTest = (wordCount = 50) => {
-    wordsToType.length = 0; // Clear previous words
-    wordDisplay.innerHTML = ""; // Clear display
-    currentWordIndex = 0;
-    startTime = null;
-    previousEndTime = null;
-
-    for (let i = 0; i < wordCount; i++) {
-        wordsToType.push(getRandomWord(modeSelect.value));
+//
+function generateWords(count, mode) {
+    const generateWords = [];
+    for (let i = 0; i < count; i++) {
+        generateWords.push(getRandomWord(mode));
     }
+    return generateWords;
+}
+//
 
-    wordsToType.forEach((word, index) => {
-        const span = document.createElement("span");
-        span.textContent = word + " ";
-        if (index === 0) span.style.color = "red"; // Highlight first word
-        wordDisplay.appendChild(span);
-    });
-
-    inputField.value = "";
-    results.textContent = "";
-};
-
-// Start the timer when user begins typing
-const startTimer = () => {
-    if (!startTime) startTime = Date.now();
-};
-
-// Calculate and return WPM & accuracy
-const getCurrentStats = () => {
-    const elapsedTime = (Date.now() - previousEndTime) / 1000; // Seconds
-    const wpm = (wordsToType[currentWordIndex].length / 5) / (elapsedTime / 60); // 5 chars = 1 word
-    const accuracy = (wordsToType[currentWordIndex].length / inputField.value.length) * 100;
-
-    return { wpm: wpm.toFixed(2), accuracy: accuracy.toFixed(2) };
+// Highlight the current word
+const highlightNextWord = () => {
+    const wordElements = wordDisplay.children;
+    if (currentWordIndex < wordElements.length) {
+            wordElements[currentWordIndex].classList.add("current-highlight");
+            previousEndTime = currentWordIndex;
+        }
+    if (previousEndTime > 0) {
+        if (previousEndTime !== null && wordElements[previousEndTime]) {
+            wordElements[previousEndTime].classList.remove("current-highlight");
+    }
+    }
 };
 
 // Move to the next word and update stats only on spacebar press
 const updateWord = (event) => {
-    if (event.key === " ") { // Check if spacebar is pressed
-        if (inputField.value.trim() === wordsToType[currentWordIndex]) {
-            if (!previousEndTime) previousEndTime = startTime;
-
-            const { wpm, accuracy } = getCurrentStats();
-            results.textContent = `WPM: ${wpm}, Accuracy: ${accuracy}%`;
-
-            currentWordIndex++;
-            previousEndTime = Date.now();
-            highlightNextWord();
-
-            inputField.value = ""; // Clear input field after space
-            event.preventDefault(); // Prevent adding extra spaces
+    wordDisplay.innerHTML = "";
+    currentWords.forEach((word, index) => {
+        const span = document.createElement("span");
+        span.textContent = word + " ";
+        wordDisplay.appendChild(span);
+        let wordCorrect = 0;
+        if (typedWords[index] && typedWords[index === word]) {
+            typedWords.style.color = "yellow";
+            wordCorrect++;
+            correct.textContent = wordCorrect
+        } else if (typedWords[index]) {
+            span.classList.add("incorrect");
+        }
+        wordDisplay.appendChild(span);
+    });
+    highlightNextWord();
+}
+//calculate accuracy
+function calculateAccuracy() {
+    let correctCount = 0;
+    for (let i = 0; i < typedWords.length && i < currentWords.length; i++) {
+        if (typedWords[i] === currentWordIndex[i]) {
+            correctCount++;
         }
     }
-};
+    return currentWords.length > 0 ? Math.round((correctCount / currentWords.length) * 100) : 0;
+}
+function updateResults() {
+    const accuracy = calculateAccuracy();
+    accuracy_html.textContent = `${accuracy}%`;
+}
 
-// Highlight the current word in red
-const highlightNextWord = () => {
-    const wordElements = wordDisplay.children;
-
-    if (currentWordIndex < wordElements.length) {
-        if (currentWordIndex > 0) {
-            wordElements[currentWordIndex - 1].style.color = "black";
+//
+// Initialize the typing test
+const startTest = () => {
+    start = true;
+    currentWords = generateWords(10, modeSelect.value);
+    typedWords = [];
+    updateWord();
+    inputField.value = "";
+    inputField.focus();
+    results.classList.add("hidden");
+    timeLeft = 60;
+    timerDisplay.textContent = timeLeft;
+    clearInterval(countdownInterval);
+    countdownInterval = setInterval(() => {
+        timeLeft--;
+        timerDisplay.textContent = timeLeft;
+        if (timeLeft === 0) {
+            clearInterval(countdownInterval);
+            endTest();
         }
-        wordElements[currentWordIndex].style.color = "red";
-    }
-};
+        if (timeLeft <= 10) {
+            timerDisplay.style.color = "red";
+        } else {
+            timerDisplay.style.color = "";
+        }
+    }, 1000);
+}
 
-// Event listeners
-// Attach `updateWord` to `keydown` instead of `input`
+function endTest() {
+    start = false;
+    clearInterval(countdownInterval);
+    inputField.disabled = true;
+
+    const wordsPerMinute = Math.round((typedWords.length / (60 - timeLeft)) * 60) || 0;
+    wpm_html.textContent = wordsPerMinute;
+    updateResults();
+    results.classList.remove("hidden");
+}
+
+inputField.addEventListener("input", () => {
+    if (!start) return;
+    typedWords = inputField.value.trim().split(/\s+/);
+    updateWord();
+    updateResults();
+
+    const inputValue = inputField.value;
+    const currentWord = currentWords[currentWordIndex];
+    const currentWordSpan = wordDisplay.children[currentWordIndex];
+    if (currentWordSpan) {
+        currentWordSpan.innerHTML = "";
+        for (let i = 0; i < currentWord.length; i++) {
+            const charSpan = document.createElement("span");
+            charSpan.textContent = currentWord[i];
+            if (i < inputValue.length && inputValue[i] === currentWord[i]) {
+                charSpan.classList.add("correct");
+            } else if (i < inputValue.length) {
+                charSpan.classList.add("incorrect");
+            }
+            currentWordSpan.appendChild(charSpan);
+        }
+    }
+
+    if(typedWords.length === currentWords.length) {
+        endTest();
+    }
+})
+
 inputField.addEventListener("keydown", (event) => {
-    startTimer();
-    updateWord(event);
+    if (event.key === "Enter") {
+        event.preventDefault();
+        if (typedWords.length > 0 && typedWords[typedWords.length - 1] === currentWords[currentWordIndex]) {
+            inputField.value = "";
+            currentWordIndex++;
+            if (currentWordIndex < currentWords.length) {
+                typedWords.push("");
+                updateWord();
+            } else {
+                endTest();
+            }
+        }
+    }
 });
-modeSelect.addEventListener("change", () => startTest());
 
-// Start the test
+modeSelect.addEventListener("change", () => {
+    if (start) {
+        clearInterval(countdownInterval);
+        start = false;
+        results.classList.add("hidden");
+    }
+    startTest();
+});
+
+startButton.addEventListener("click", startTest);
+restartButton.addEventListener("click", startTest);
+
+if (localStorage.getItem("mode")) {
+    modeSelect.value = localStorage.getItem("mode");
+}
+
+modeSelect.addEventListener("change", () => {
+    localStorage.setItem("mode", modeSelect.value);
+});
+
 startTest();
 
 //Code of keyboard
@@ -112,14 +205,14 @@ const keys = keyboard.querySelectorAll("button");
 document.addEventListener("keydown", (event) => {
 const keyPressed = event.key.toLowerCase();
 
-keys.forEach(keyElement => {
-    const dataKey = keyElement.dataset.key.toLowerCase();
-
-    if (keyPressed === dataKey) {
-        keyElement.classList.add("active");
-        setTimeout(() => {
-            keyElement.classList.remove("active");
-        }, 100);
-    }
-});
+    keys.forEach(keyElement => {
+        const dataKey = keyElement.dataset.key.toLowerCase();
+    
+        if (keyPressed === dataKey) {
+            keyElement.classList.add("active");
+            setTimeout(() => {
+                keyElement.classList.remove("active");
+            }, 100);
+        }
+    });
 })
