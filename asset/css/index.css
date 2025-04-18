@@ -22,6 +22,9 @@ body {
     width: 300px;
     color: white;
 }
+.buttonStart-active {
+    display: none;
+}
 #timer {
     font-size: 1.2em;
     margin-bottom: 10px;
@@ -90,19 +93,20 @@ input{
     font-size: 25px;
 }
 .correct {
-    color: rgb(70, 73, 70);
+    color: green;
 }
 .incorrect {
     color: red
 }
 .current-highlight {
     background-color: yellow;
+    color: pink;
 }
-.keyboard_end {
+.results {
     display: none;
 }
-.hidden {
-    display: none;
+.results-active {
+    display: block;
 }
 .keyboard {
     display: flex;
