@@ -20,6 +20,12 @@ body {
 #input-container {
     display: inline-block;
 }
+.input {
+    display: none;
+}
+.input-active {
+    display: block;
+}
 #input-field {
     font-size: 1.2em;
     padding: 10px;
@@ -29,6 +35,7 @@ body {
 .buttonStart-active {
     display: none;
 }
+<<<<<<< HEAD
 <<<<<<< HEAD
 .restart-button-active {
     display: block;
@@ -84,6 +91,8 @@ body {
     background-color: rgba(58, 58, 58, 0.288);
 
 }
+=======
+>>>>>>> Daniela
 #results {
     margin-top: 0px;
     margin-bottom: 1vh;
@@ -162,12 +171,21 @@ input{
     font-size: 20px;
     box-shadow: 0px 0px 3px 3px rgb(139, 8, 8);
 }
+.timer {
+display: none;
+}
+.timer-active {
+    display: block;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
 .correct {
     color: green;
 }
 .incorrect {
     color: red
 }
+(ito no misy anle loko mavo amle mots tapena iny de ovay amze loko sy pozy itanla oe mety aminy)
 .current-highlight {
     background-color: yellow;
     color: pink;
@@ -179,13 +197,21 @@ input{
     display: block;
 }
 .keyboard {
+    display: none;
+}
+.keyboard-active {
     display: flex;
     flex-direction: column;
     gap: 3px;
     margin-inline: 400px;
+<<<<<<< HEAD
     
     
     
+=======
+    color: rgba(255, 0, 200, 0.753);
+    display: block;
+>>>>>>> Daniela
 }
 .row {
     display: flex;
