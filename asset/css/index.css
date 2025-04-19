@@ -4,6 +4,7 @@
     font-family: sans-serif;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 #word-display {
 =======
@@ -17,6 +18,10 @@ body {
 }
 .word-display-active {
 >>>>>>> c32ef2a8d9ff5f14bc609ac88a1d1087e549d049
+=======
+
+#word-display {
+>>>>>>> RantoSTD24122
     font-size: 1.5em;
     margin-bottom: 20px;
     color: white;
@@ -34,12 +39,15 @@ body {
 .buttonStart-active {
     display: none;
 }
+<<<<<<< HEAD
 .restart-button-active {
     display: block;
 }
 .restart-button {
     display: none;
 }
+=======
+>>>>>>> RantoSTD24122
 #timer {
     font-size: 1.5em;
     margin-bottom: 0px;
@@ -174,6 +182,7 @@ input{
 }
 .current-highlight {
     background-color: yellow;
+    color: pink;
 }
 .results {
     display: none;
