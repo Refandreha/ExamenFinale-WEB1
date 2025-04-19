@@ -31,20 +31,20 @@
     <nav class="navbar">
     </nav>
     <main class="main">
-        <div id="timer"></div>
+        <div id="timer" class="timer"></div>
         <button id="start-button" class="buttonStart">Start</button>
         <p id="word-display" class="word-display"></p>
-        <button id="restart-button" class="restart-button">Restart</button>
-        <input type="text" id="input-field" autofocus>
+        <input type="text" id="input-field" autofocus class="input">
         <div id="results" class="results">
             <h2>Results</h2>
             <p>WPM : <span id="wpm">0</span></p>
             <p>Accuracy : <span id="accuracy">0%</span></p>
             <p>Correct : <span id="correct">0</span></p>
             <p>Incorrect : <span id="incorrect">0</span></p>
+            <button id="restart-button" class="restart-button">Restart</button>
     </main>
 
-    <div class="keyboard">
+    <div id="keyboard" class="keyboard">
         <div class="row">
             <button data-key="a">a</button>
             <button data-key="z">z</button>

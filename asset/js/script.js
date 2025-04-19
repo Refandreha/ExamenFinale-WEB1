@@ -20,28 +20,29 @@ const correctCountDisplay = document.getElementById("correct");
 const incorrectCountDisplay = document.getElementById("incorrect");
 const startButton = document.getElementById("start-button");
 const restartButton = document.getElementById("restart-button");
+const keyboardDisplay = document.getElementById("keyboard");
 const easyMode = [
-    "the sun is bright",
-    "a bird sings sweetly",
-    "the dog barks loudly",
-    "she reads a book",
-    "flowers bloom in spring"
+    "the sun is bright the sun is bright the sun is bright the sun is bright",
+    "a bird sings sweetly a bird sings sweetly a bird sings sweetly a bird sings sweetly",
+    "the dog barks loudly the dog barks loudly the dog barks loudly the dog barks loudly",
+    "she reads a book she reads a book she reads a book she reads a book she reads a book",
+    "flowers bloom in spring flowers bloom in spring flowers bloom in spring flowers bloom in spring"
 ];
 const mediumMode = [
-    "the old house stands on a hill overLooking the town",
-    "a gentle breeze rusled the leaves on the tall oak trees",
-    "the chef prepared a delicious meal with fresh ingredients",
-    "children playes happily in the park under the watchful eyes of their parents",
-    "the scientist conducted an experiment in the well-equipped laboratory",
-    "music filled the air as the band played their favorite song"
+    "the old house stands on a hill overLooking the town the old house stands on a hill overLooking the town a gentle breeze rusled the leaves on the tall oak trees",
+    "a gentle breeze rusled the leaves on the tall oak trees a gentle breeze rusled the leaves on the tall oak trees a gentle breeze rusled the leaves on the tall oak trees",
+    "the chef prepared a delicious meal with fresh ingredients the chef prepared a delicious meal with fresh ingredients the chef prepared a delicious meal with fresh ingredients",
+    "children playes happily in the park under the watchful eyes of their parents children playes happily in the park under the watchful eyes of their parents children playes happily in the park under the watchful eyes of their parents",
+    "the scientist conducted an experiment in the well-equipped laboratory the scientist conducted an experiment in the well-equipped laboratory the scientist conducted an experiment in the well-equipped laboratory",
+    "music filled the air as the band played their favorite song music filled the air as the band played their favorite songmusic filled the air as the band played their favorite song"
 ];
 const hardMode = [
-    "the juxtaposition of constrasting elements created a visually stunning effect",
-    "unforeseen circumstances necessitated a reevaluation of the initial strategy",
-    "the complexities of quantum physics often challenge conventional understanding",
-    "her perspicacity allowed her to quickly grasp the nuances of the situation",
-    "the ephemeral nature of beauty underscores the importance of cherishing the present moment",
-    "his eloquent articulation of intricate ideas captivated the audience"
+    "the juxtaposition of constrasting elements created a visually stunning effect the juxtaposition of constrasting elements created a visually stunning effect the juxtaposition of constrasting elements created a visually stunning effect the complexities of quantum physics often challenge conventional understanding",
+    "unforeseen circumstances necessitated a reevaluation of the initial strategy the juxtaposition of constrasting elements created a visually stunning effect the juxtaposition of constrasting elements created a visually stunning effect the complexities of quantum physics often challenge conventional understanding",
+    "the complexities of quantum physics often challenge conventional understanding the complexities of quantum physics often challenge conventional understanding the complexities of quantum physics often challenge conventional understanding the complexities of quantum physics often challenge conventional understanding",
+    "her perspicacity allowed her to quickly grasp the nuances of the situation her perspicacity allowed her to quickly grasp the nuances of the situation her perspicacity allowed her to quickly grasp the nuances of the situation her perspicacity allowed her to quickly grasp the nuances of the situation",
+    "the ephemeral nature of beauty underscores the importance of cherishing the present moment the ephemeral nature of beauty underscores the importance of cherishing the present moment the ephemeral nature of beauty underscores the importance of cherishing the present moment the ephemeral nature of beauty underscores the importance of cherishing the present moment",
+    "his eloquent articulation of intricate ideas captivated the audience his eloquent articulation of intricate ideas captivated the audience his eloquent articulation of intricate ideas captivated the audience his eloquent articulation of intricate ideas captivated the audience his eloquent articulation of intricate ideas captivated the audience"
 ]
 // Generate a random word from the selected mode
 const getRandomText = (texts) => {
@@ -87,6 +88,9 @@ function displayWords() {
         wordSpan.textContent = word + " ";
         wordSpan.id = `word-${index}`;
         wordDisplay.appendChild(wordSpan);
+        if (index < currentTextArray.length - 1) {
+            wordDisplay.innerHTML += " ";
+        }
     });
     highlightNextWord();
 }
@@ -125,7 +129,9 @@ function updateTimer() {
 // Initialize the typing test
 const startTest = () => {
     wordDisplay.classList.add("word-display-active");
-    restartButton.classList.add("restart-button-active");
+    keyboardDisplay.classList.add("keyboard-active");
+    inputField.classList.add("input-active");
+    timerDisplay.classList.add("timer-active");
     started = true;
     startTime = new Date().getTime();
     resetGame();
@@ -243,10 +249,12 @@ function resetGame() {
     resultsDiv.classList.remove("results-active");
     inputField.disabled = false;
     startButton.disabled = false;
+    inputField.focus();
 }
 
     restartButton.addEventListener("click", () => {
         startTest();
+        inputField.focus();
     });
 
 
@@ -289,11 +297,10 @@ modeSelect.addEventListener("change", () => {
 });
 
 startButton.addEventListener("click", () => {
-    startTest;
+    startTest();
     startButton.classList.add("buttonStart-active")
 });
 
-//Code of keyboard
 const keyboard = document.querySelector(".keyboard");
 const keys = keyboard.querySelectorAll("button");
 

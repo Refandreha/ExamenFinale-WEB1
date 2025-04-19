@@ -20,6 +20,12 @@ body {
 #input-container {
     display: inline-block;
 }
+.input {
+    display: none;
+}
+.input-active {
+    display: block;
+}
 #input-field {
     font-size: 1.2em;
     padding: 10px;
@@ -28,16 +34,6 @@ body {
 }
 .buttonStart-active {
     display: none;
-}
-.restart-button-active {
-    display: block;
-}
-.restart-button {
-    display: none;
-}
-#timer {
-    font-size: 1.2em;
-    margin-bottom: 10px;
 }
 #results {
     margin-top: 20px;
@@ -102,12 +98,21 @@ input{
     background-color: rgba(0, 0, 255, 0.144);
     font-size: 25px;
 }
+.timer {
+display: none;
+}
+.timer-active {
+    display: block;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
 .correct {
     color: green;
 }
 .incorrect {
     color: red
 }
+(ito no misy anle loko mavo amle mots tapena iny de ovay amze loko sy pozy itanla oe mety aminy)
 .current-highlight {
     background-color: yellow;
 }
@@ -118,11 +123,15 @@ input{
     display: block;
 }
 .keyboard {
+    display: none;
+}
+.keyboard-active {
     display: flex;
     flex-direction: column;
     gap: 3px;
     margin-inline: 400px;
     color: rgba(255, 0, 200, 0.753);
+    display: block;
 }
 .row {
     display: flex;
