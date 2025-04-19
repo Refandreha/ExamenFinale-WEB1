@@ -8,10 +8,14 @@ body {
     background-size: 125%;
     backdrop-filter: blur(100px);
 }
-#word-display {
+.word-display {
+    display: none;
+}
+.word-display-active {
     font-size: 1.5em;
     margin-bottom: 20px;
     color: white;
+    display: block;
 }
 #input-container {
     display: inline-block;
@@ -23,6 +27,12 @@ body {
     color: white;
 }
 .buttonStart-active {
+    display: none;
+}
+.restart-button-active {
+    display: block;
+}
+.restart-button {
     display: none;
 }
 #timer {
@@ -100,7 +110,6 @@ input{
 }
 .current-highlight {
     background-color: yellow;
-    color: pink;
 }
 .results {
     display: none;

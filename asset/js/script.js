@@ -1,10 +1,3 @@
-/**
- * Point culture (en Français car je suis un peu obligé): 
- * Dans ce genre de jeu, un mot equivaut a 5 caractères, y compris les espaces. 
- * La precision, c'est le pourcentage de caractères tapées correctement sur toutes les caractères tapées.
- * 
- * Sur ce... Amusez-vous bien ! 
- */
 let startTime = null, previousEndTime = null;
 let endTime;
 let totalTypedCharacters = 0;
@@ -27,13 +20,7 @@ const correctCountDisplay = document.getElementById("correct");
 const incorrectCountDisplay = document.getElementById("incorrect");
 const startButton = document.getElementById("start-button");
 const restartButton = document.getElementById("restart-button");
-/*
-const words = {
-    easy: ["apple", "banana", "grape", "orange", "cherry"],
-    medium: ["keyboard", "monitor", "printer", "charger", "battery"],
-    hard: ["synchronize", "complicated", "development", "extravagant", "misconception"]
-};
-*/
+
 const easyMode = [
     "the sun is bright",
     "a bird sings sweetly",
@@ -85,12 +72,26 @@ function displayWords() {
     });
     highlightNextWord();
 }
+function generateWords(count, mode) {
+    const generateWords = [];
+    for(let i = 0; i < count; i++) {
+        generateWords.push(getRandomText(mode));
+    }
+    return generateWords;
+}
 
 // Highlight the current word
 const highlightNextWord = () => {
     const currentWordSpan = document.getElementById(`word-${currentWordIndex}`);
     if (currentWordSpan) {
-        currentWordSpan.classList.add("current-highlight")
+        if (previousEndTime !== null) {
+            const previousWordSpan = document.getElementById(`word-${previousEndTime}`);
+            if (previousWordSpan) {
+                previousWordSpan.classList.remove("current-highlight");
+            }
+        }
+        currentWordSpan.classList.add("current-highlight");
+        previousEndTime = currentWordIndex;
     }
 };
 
@@ -110,14 +111,14 @@ function updateTimer() {
         timerDisplay.style.color = "";
     }
 }
-
 // Initialize the typing test
 const startTest = () => {
+    wordDisplay.classList.add("word-display-active");
+    restartButton.classList.add("restart-button-active");
     started = true;
     startTime = new Date().getTime();
     resetGame();
     setTextForMode(modeSelect.value);
-   // currentWords = generateWords(10, modeSelect.value);
     inputField.value = "";
     inputField.focus();
     timeLeft = 60;
@@ -132,8 +133,7 @@ const startTest = () => {
         }
     }, 1000);
     startButton.disabled = true;
-}
-
+};
 function endTest() {
     started = false;
     endTime = new Date().getTime();
@@ -143,10 +143,14 @@ function endTest() {
     resultsDiv.classList.add("results-active");
     startButton.disabled = false;
 }
-
+function calculateWpm(timeElapsed) {
+    if (!timeElapsed) return 0;
+    const wordsTyped = totalTypedCharacters / 5;
+    return Math.round((wordsTyped / timeElapsed) * 60);
+}   
 function calculateResults() {
-    const timeElapsed = (endTime - startTime) / 60000;
-    const wordsPerMinute = timeElapsed > 0 ? Math.round((totalTypedCharacters / 5) / timeElapsed) : 0;
+    let timeElapsed = (endTime - startTime) / 60000;
+    const wordsPerMinute = calculateWpm(timeElapsed);
     wpmDisplay.textContent = wordsPerMinute;
     accuracyDisplay.textContent = calculateAccuracy() + "%";
     correctCountDisplay.textContent = correctWord;
@@ -155,25 +159,20 @@ function calculateResults() {
 function calculateAccuracy() {
     return totalTypedCharacters > 0 ? Math.round((((totalTypedCharacters - incorrectWord) > 0 ? (totalTypedCharacters - incorrectWord) : 0) / totalTypedCharacters) * 100) : 0;
 }
+
 inputField.addEventListener("input", (event) => {
-    event.preventDefault();
-
     if (!started) return;
-
     const typedValue = inputField.value;
     const currentWord = currentTextArray[currentWordIndex];
     const currentWordSpan = wordDisplay.children[currentWordIndex];
 
     if (!currentWordSpan) return;
-
     let correctCharsInWord = 0;
-
     currentWordSpan.innerHTML = "";
-
+    let isCorrect = false;
     for (let i = 0; i < currentWord.length; i++) {
         const charSpan = document.createElement("span");
         charSpan.textContent = currentWord[i];
-
         if (i < typedValue.length) {
             if (typedValue[i] === currentWord[i]) {
                 charSpan.classList.add("correct");
@@ -184,29 +183,24 @@ inputField.addEventListener("input", (event) => {
         }
         currentWordSpan.appendChild(charSpan);
     }
-    if (typedValue.length > currentWord.length && !typedValue.endsWith(" ")) {
-        incorrectWord++;
+    if (typedValue.length === currentWord.length && typedValue === currentWord) {
+        isCorrect = true;
     }
-
-    if (typedValue === currentWord + " ") {
+    if (typedValue.endsWith(" ") || isCorrect) {
         if (typedValue.trim() === currentWord) {
             correctWord++;
-        } else {
-            incorrectWord++;
-        }
-
-
-        totalTypedCharacters += typedValue.length;
-        inputField.value = "";
-        currentWordIndex++;
-
-        if (currentWordIndex < currentTextArray.length) {
-            highlightNextWord();
-        } else {
-            endTest();
-        }
+            } else {
+                incorrectWord++;
+            }
+            totalTypedCharacters += typedValue.trim().length;
+            inputField.value = "";
+            currentWordIndex++;
+            if (currentWordIndex < currentTextArray.length) {
+                highlightNextWord();
+            } else {
+                endTest();
+            }
     }
-
     updateResultsDisplay();
 });
 
@@ -236,11 +230,15 @@ function resetGame() {
 }
 
     restartButton.addEventListener("click", () => {
-        resetGame();
+        startTest();
     });
 
 
     modeSelect.addEventListener("change", (event) => {
+        if (started) {
+            clearInterval(correctCountDisplay);
+            started = false;
+        }
         setTextForMode(event.target.value);
     });
 
@@ -251,13 +249,13 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 
-//Maintain mode after page refreshment
+//Maintain mode after page refresh
 modeSelect.addEventListener("change", () => {
     if (started) {
         clearInterval(countdownInterval);
         started = false;
     }
-    startTest();
+    localStorage.setItem("mode", modeSelect.value);
 });
 
 startButton.addEventListener("click", startTest);
