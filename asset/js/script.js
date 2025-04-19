@@ -10,6 +10,7 @@ let incorrectWord = 0;
 let started = false;
 
 const modeSelect = document.getElementById("mode");
+const languageSelect = document.getElementById("language");
 const wordDisplay = document.getElementById("word-display");
 const inputField = document.getElementById("input-field");
 const timerDisplay = document.getElementById("timer");
@@ -20,54 +21,121 @@ const correctCountDisplay = document.getElementById("correct");
 const incorrectCountDisplay = document.getElementById("incorrect");
 const startButton = document.getElementById("start-button");
 const restartButton = document.getElementById("restart-button");
-const easyMode = [
-    "the sun is bright",
-    "a bird sings sweetly",
-    "the dog barks loudly",
-    "she reads a book",
-    "flowers bloom in spring"
-];
-const mediumMode = [
-    "the old house stands on a hill overLooking the town",
-    "a gentle breeze rusled the leaves on the tall oak trees",
-    "the chef prepared a delicious meal with fresh ingredients",
-    "children playes happily in the park under the watchful eyes of their parents",
-    "the scientist conducted an experiment in the well-equipped laboratory",
-    "music filled the air as the band played their favorite song"
-];
-const hardMode = [
-    "the juxtaposition of constrasting elements created a visually stunning effect",
-    "unforeseen circumstances necessitated a reevaluation of the initial strategy",
-    "the complexities of quantum physics often challenge conventional understanding",
-    "her perspicacity allowed her to quickly grasp the nuances of the situation",
-    "the ephemeral nature of beauty underscores the importance of cherishing the present moment",
-    "his eloquent articulation of intricate ideas captivated the audience"
-]
-// Generate a random word from the selected mode
-const getRandomText = (texts) => {
-    const radomText = Math.floor(Math.random() * texts.length);
-    return texts[radomText];
-};
 
-function setTextForMode (mode) {
-    if (mode === "easy") {
-        currentTextArray = getRandomText(easyMode).split(" ");
-    } else if (mode === "medium") {
-        currentTextArray = getRandomText(mediumMode).split(" ");
-    } else if (mode === "hard") {
-        currentTextArray = getRandomText(hardMode).split(" ");
+const languageText = {
+    english: {
+        easyMode: [
+            "the sun is bright",
+            "a bird sings sweetly",
+            "the dog barks loudly",
+            "she reads a book",
+            "flowers bloom in spring"
+        ],
+        mediumMode: [
+            "the old house stands on a hill overLooking the town",
+            "a gentle breeze rusled the leaves on the tall oak trees",
+            "the chef prepared a delicious meal with fresh ingredients",
+            "children playes happily in the park under the watchful eyes of their parents",
+            "the scientist conducted an experiment in the well-equipped laboratory",
+            "music filled the air as the band played their favorite song"
+        ],
+        hardMode: [
+            "the juxtaposition of constrasting elements created a visually stunning effect",
+            "unforeseen circumstances necessitated a reevaluation of the initial strategy",
+            "the complexities of quantum physics often challenge conventional understanding",
+            "her perspicacity allowed her to quickly grasp the nuances of the situation",
+            "the ephemeral nature of beauty underscores the importance of cherishing the present moment",
+            "his eloquent articulation of intricate ideas captivated the audience"
+        ]
+    },
+    french: {
+        easyMode: [
+            "le soleil est brillant",
+            "lesoleil est chaud",
+            "tu es belle",
+        ],
+        mediumMode: [
+            "the old house stands on a hill overLooking the town fr",
+            "a gentle breeze rusled the leaves on the tall oak trees fr",
+            "the chef prepared a delicious meal with fresh ingredients fr",
+            "children playes happily in the park under the watchful eyes of their parents fr",
+            "the scientist conducted an experiment in the well-equipped laboratory fr",
+            "music filled the air as the band played their favorite song fr"
+        ],
+        hardMode: [
+            "the old house stands on a hill overLooking the town frh",
+            "a gentle breeze rusled the leaves on the tall oak trees frh",
+            "the chef prepared a delicious meal with fresh ingredients frh",
+            "children playes happily in the park under the watchful eyes of their parents frh",
+            "the scientist conducted an experiment in the well-equipped laboratory frh",
+            "music filled the air as the band played their favorite song frh"
+        ]
+    },
+    spanish: {
+        easyMode: [
+            "te quiro",
+            "te amo",
+            "a mi me duelo"
+        ],
+        mediumMode: [
+            "the old house stands on a hill overLooking the town frh esp",
+            "a gentle breeze rusled the leaves on the tall oak trees frh esp",
+            "the chef prepared a delicious meal with fresh ingredients frh esp",
+            "children playes happily in the park under the watchful eyes of their parents frh esp",
+            "the scientist conducted an experiment in the well-equipped laboratory frh esp",
+            "music filled the air as the band played their favorite song frh esp"
+        ],
+        hardMode: [
+            "the old house stands on a hill overLooking the town esp",
+            "a gentle breeze rusled the leaves on the tall oak trees esp",
+            "the chef prepared a delicious meal with fresh ingredients esp",
+            "children playes happily in the park under the watchful eyes of their parents esp",
+            "the scientist conducted an experiment in the well-equipped laboratory esp",
+            "music filled the air as the band played their favorite song esp"
+        ]
     }
-    resetGame();
-    displayWords();
 }
 
+// Generate a random word from the selected mode
+const getRandomText = (texts) => {
+    const randomText = Math.floor(Math.random() * texts.length);
+    return texts[randomText];
+};
+
+function setTextForMode (language, mode) {
+    const texts = languageText[language][mode];
+    const textRandom = getRandomText(texts);
+    currentTextArray = textRandom.split(" ");
+    currentWordIndex = 0;
+    //resetGame();
+    displayWords();
+}
+languageSelect.addEventListener("change", () => {
+    changerText();
+});
+modeSelect.addEventListener("change", () => {
+    changerText();
+});
+
+function changerText() {
+    const currentLanguage = languageSelect.value;
+    const currentMode = modeSelect.value;
+    setTextForMode(currentLanguage, currentMode);
+}
 function displayWords() {
     wordDisplay.innerHTML = "";
     currentTextArray.forEach((word, index) => {
         const wordSpan = document.createElement("span");
-        wordSpan.textContent = word + " ";
-        wordSpan.id = `word-${index}`;
+        for (let i = 0; i < word.length; i++) {
+            const charSpan = document.createElement("span");
+            charSpan.textContent = word[i];
+            wordSpan.appendChild(charSpan);
+        }
         wordDisplay.appendChild(wordSpan);
+        wordDisplay.appendChild(document.createTextNode(" "));
+        if (index < currentTextArray.length - 1) {
+            wordDisplay.innerHTML += " ";
+        }
     });
     highlightNextWord();
 }
