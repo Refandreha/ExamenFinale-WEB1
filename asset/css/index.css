@@ -35,21 +35,13 @@ body {
 .buttonStart-active {
     display: none;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-.restart-button-active {
-    display: block;
-}
-.restart-button {
-    display: none;
-}
 #timer {
     font-size: 1.5em;
     margin-bottom: 0px;
     position: absolute;
     text-shadow: 0px 3px 5px   #b30202;
     top: 17vh;
-    left: 10vw;
+    left: 7vw;
 }
 #start-button{
     color: #eee;
@@ -58,13 +50,14 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: large; 
     border: 0px;
-    box-shadow:3px 3px  #b30202;
+    box-shadow:3px 3px #b30202;
     background-color: rgba(0, 0, 0, 0.288);
     border-radius: 10vh;
-    position: absolute;
+    margin: auto;
+    margin-block: 20%;
     top: 15vh;
     left: 66vw;
-
+    width: 40%;
     
 }
 .changeText{
@@ -91,8 +84,6 @@ body {
     background-color: rgba(58, 58, 58, 0.288);
 
 }
-=======
->>>>>>> Daniela
 #results {
     margin-top: 0px;
     margin-bottom: 1vh;
@@ -160,9 +151,9 @@ select{
 input{
     padding-top: 1vh;
     padding-bottom: 1vh;
-    margin-top: 1vh;
+    margin-top: 5vh;
     margin-bottom: 2vh;
-    margin-left: 9vw;
+    margin-left: 30vw;
     padding-left: 1vw;
     border-radius: 20vh;
     border: 0.5px black;
@@ -185,16 +176,15 @@ display: none;
 .incorrect {
     color: red
 }
-(ito no misy anle loko mavo amle mots tapena iny de ovay amze loko sy pozy itanla oe mety aminy)
 .current-highlight {
     background-color: yellow;
-    color: pink;
 }
 .results {
     display: none;
 }
 .results-active {
     display: block;
+    margin-top: 20%;
 }
 .keyboard {
     display: none;
@@ -203,15 +193,10 @@ display: none;
     display: flex;
     flex-direction: column;
     gap: 3px;
-    margin-inline: 400px;
-<<<<<<< HEAD
-    
-    
-    
-=======
-    color: rgba(255, 0, 200, 0.753);
+    color: rgba(255, 0, 0, 0.829);
     display: block;
->>>>>>> Daniela
+    margin-top: 7%;
+    margin-left: 30%;
 }
 .row {
     display: flex;
@@ -241,8 +226,8 @@ button.special2 {
     margin-right: 10px;
 }
 button.space {
-    width: 75%;
-    margin-inline: 53px;
+    width: 40%;
+    margin-left: 50px;
 }
 button.active {
     background-color: rgba(255, 0, 0, 0.829);

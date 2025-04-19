@@ -20,83 +20,6 @@ const correctCountDisplay = document.getElementById("correct");
 const incorrectCountDisplay = document.getElementById("incorrect");
 const startButton = document.getElementById("start-button");
 const restartButton = document.getElementById("restart-button");
-<<<<<<< HEAD
-
-const languageText = {
-    english: {
-        easyMode: [
-            "the sun is bright",
-            "a bird sings sweetly",
-            "the dog barks loudly",
-            "she reads a book",
-            "flowers bloom in spring"
-        ],
-        mediumMode: [
-            "the old house stands on a hill overLooking the town",
-            "a gentle breeze rusled the leaves on the tall oak trees",
-            "the chef prepared a delicious meal with fresh ingredients",
-            "children playes happily in the park under the watchful eyes of their parents",
-            "the scientist conducted an experiment in the well-equipped laboratory",
-            "music filled the air as the band played their favorite song"
-        ],
-        hardMode: [
-            "the juxtaposition of constrasting elements created a visually stunning effect",
-            "unforeseen circumstances necessitated a reevaluation of the initial strategy",
-            "the complexities of quantum physics often challenge conventional understanding",
-            "her perspicacity allowed her to quickly grasp the nuances of the situation",
-            "the ephemeral nature of beauty underscores the importance of cherishing the present moment",
-            "his eloquent articulation of intricate ideas captivated the audience"
-        ]
-    },
-    french: {
-        easyMode: [
-            "le soleil est brillant",
-            "lesoleil est chaud",
-            "tu es belle",
-        ],
-        mediumMode: [
-            "the old house stands on a hill overLooking the town fr",
-            "a gentle breeze rusled the leaves on the tall oak trees fr",
-            "the chef prepared a delicious meal with fresh ingredients fr",
-            "children playes happily in the park under the watchful eyes of their parents fr",
-            "the scientist conducted an experiment in the well-equipped laboratory fr",
-            "music filled the air as the band played their favorite song fr"
-        ],
-        hardMode: [
-            "the old house stands on a hill overLooking the town frh",
-            "a gentle breeze rusled the leaves on the tall oak trees frh",
-            "the chef prepared a delicious meal with fresh ingredients frh",
-            "children playes happily in the park under the watchful eyes of their parents frh",
-            "the scientist conducted an experiment in the well-equipped laboratory frh",
-            "music filled the air as the band played their favorite song frh"
-        ]
-    },
-    spanish: {
-        easyMode: [
-            "te quiro",
-            "te amo",
-            "a mi me duelo"
-        ],
-        mediumMode: [
-            "the old house stands on a hill overLooking the town frh esp",
-            "a gentle breeze rusled the leaves on the tall oak trees frh esp",
-            "the chef prepared a delicious meal with fresh ingredients frh esp",
-            "children playes happily in the park under the watchful eyes of their parents frh esp",
-            "the scientist conducted an experiment in the well-equipped laboratory frh esp",
-            "music filled the air as the band played their favorite song frh esp"
-        ],
-        hardMode: [
-            "the old house stands on a hill overLooking the town esp",
-            "a gentle breeze rusled the leaves on the tall oak trees esp",
-            "the chef prepared a delicious meal with fresh ingredients esp",
-            "children playes happily in the park under the watchful eyes of their parents esp",
-            "the scientist conducted an experiment in the well-equipped laboratory esp",
-            "music filled the air as the band played their favorite song esp"
-        ]
-    }
-}
-
-=======
 const keyboardDisplay = document.getElementById("keyboard");
 const easyMode = [
     "the sun is bright the sun is bright the sun is bright the sun is bright",
@@ -121,7 +44,6 @@ const hardMode = [
     "the ephemeral nature of beauty underscores the importance of cherishing the present moment the ephemeral nature of beauty underscores the importance of cherishing the present moment the ephemeral nature of beauty underscores the importance of cherishing the present moment the ephemeral nature of beauty underscores the importance of cherishing the present moment",
     "his eloquent articulation of intricate ideas captivated the audience his eloquent articulation of intricate ideas captivated the audience his eloquent articulation of intricate ideas captivated the audience his eloquent articulation of intricate ideas captivated the audience his eloquent articulation of intricate ideas captivated the audience"
 ]
->>>>>>> Daniela
 // Generate a random word from the selected mode
 const getRandomText = (texts) => {
     const radomText = Math.floor(Math.random() * texts.length);
@@ -166,12 +88,9 @@ function displayWords() {
         wordSpan.textContent = word + " ";
         wordSpan.id = `word-${index}`;
         wordDisplay.appendChild(wordSpan);
-<<<<<<< HEAD
-=======
         if (index < currentTextArray.length - 1) {
             wordDisplay.innerHTML += " ";
         }
->>>>>>> Daniela
     });
     highlightNextWord();
 }
@@ -210,26 +129,9 @@ function updateTimer() {
 // Initialize the typing test
 const startTest = () => {
     wordDisplay.classList.add("word-display-active");
-<<<<<<< HEAD
-    restartButton.classList.add("restart-button-active");
-    }
-
-function updateTimer() {
-    timerDisplay.textContent = timeLeft;
-    if (timeLeft <= 10) {
-        timerDisplay.style.color = "red";
-    } else {
-        timerDisplay.style.color = "";
-    }
-}
-
-// Initialize the typing test
-const startTest = () => {
-=======
     keyboardDisplay.classList.add("keyboard-active");
     inputField.classList.add("input-active");
     timerDisplay.classList.add("timer-active");
->>>>>>> Daniela
     started = true;
     startTime = new Date().getTime();
     resetGame();
@@ -259,6 +161,7 @@ function endTest() {
     started = false;
     endTime = new Date().getTime();
     clearInterval(countdownInterval);
+    keyboardDisplay.classList.remove("keyboard-active")
     inputField.disabled = true;
     calculateResults();
     resultsDiv.classList.add("results-active");
@@ -294,15 +197,12 @@ function calculateAccuracy() {
     return totalTypedCharacters > 0 ? Math.round((((totalTypedCharacters - incorrectWord) > 0 ? (totalTypedCharacters - incorrectWord) : 0) / totalTypedCharacters) * 100) : 0;
 }
 inputField.addEventListener("input", (event) => {
-    event.preventDefault();
-
     if (!started) return;
     const typedValue = inputField.value;
     const currentWord = currentTextArray[currentWordIndex];
     const currentWordSpan = wordDisplay.children[currentWordIndex];
 
     if (!currentWordSpan) return;
-    let correctCharsInWord = 0;
     currentWordSpan.innerHTML = "";
     let isCorrect = false;
     for (let i = 0; i < currentWord.length; i++) {
@@ -417,8 +317,6 @@ document.addEventListener("DOMContentLoaded", () => {
     inputField.focus();
 })
 
-
-//Maintain mode after page refresh
 modeSelect.addEventListener("change", () => {
     if (started) {
         clearInterval(countdownInterval);
