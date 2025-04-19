@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <p>.</p>
+<p>.</p>
     
     <header class="header">
         <a href=""><i class="fa-solid fa-wrench"></i></a>
@@ -39,20 +39,23 @@
     </nav>
     <main class="main">
         <div id="timer"></div>
-        <button id="start-button">Start</button>
+        <button id="start-button" class="buttonStart">Start</button>
+        <a href=""><button class="changeText">Change the words</button></a>
         <p id="word-display"></p>
-        <a href=""><i id="restart-button"  class="fa-solid fa-arrows-rotate"></i></a>
-        <input type="text" id="input-field" autofocus>
-        <div id="results">
+        
+        
+        <div id="results" class="results">
             <h2>Results</h2>
             <p>WPM : <span id="wpm">0</span></p>
             <p>Accuracy : <span id="accuracy">0%</span></p>
             <p>Correct : <span id="correct">0</span></p>
             <p>Incorrect : <span id="incorrect">0</span></p>
+            <a href=""><i id="restart-button"  class="fa-solid fa-arrows-rotate"></i></a>
         </div>
     </main>
 
     <div class="keyboard">
+        <input type="text" id="input-field" autofocus>
         <div class="row">
             <button data-key="a">a</button>
             <button data-key="z">z</button>
@@ -91,6 +94,7 @@
             <button class="space" data-key=" ">Space</button>
         </div>
     </div>
+
     <script src="asset/js/script.js"></script>
 </body>
 

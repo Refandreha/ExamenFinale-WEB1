@@ -6,187 +6,270 @@
  * Sur ce... Amusez-vous bien ! 
  */
 let startTime = null, previousEndTime = null;
+let endTime;
+let totalTypedCharacters = 0;
 let currentWordIndex = 0;
-const wordsToType = [];
+let currentTextArray = [];
 let timeLeft = 60;
 let countdownInterval;
+let correctWord = 0;
+let incorrectWord = 0;
+let started = false;
 
 const modeSelect = document.getElementById("mode");
 const wordDisplay = document.getElementById("word-display");
 const inputField = document.getElementById("input-field");
 const timerDisplay = document.getElementById("timer");
-const results = document.getElementById("results");
-const wpm_html = document.getElementById("wpm");
-const accuracy_html = document.getElementById("accuracy");
-const correct = document.getElementById("correct");
-const incorrect = document.getElementById("incorrect");
+const resultsDiv = document.getElementById("results");
+const wpmDisplay = document.getElementById("wpm");
+const accuracyDisplay = document.getElementById("accuracy");
+const correctCountDisplay = document.getElementById("correct");
+const incorrectCountDisplay = document.getElementById("incorrect");
 const startButton = document.getElementById("start-button");
 const restartButton = document.getElementById("restart-button");
-
+/*
 const words = {
     easy: ["apple", "banana", "grape", "orange", "cherry"],
     medium: ["keyboard", "monitor", "printer", "charger", "battery"],
     hard: ["synchronize", "complicated", "development", "extravagant", "misconception"]
 };
-
+*/
+const easyMode = [
+    "the sun is bright",
+    "a bird sings sweetly",
+    "the dog barks loudly",
+    "she reads a book",
+    "flowers bloom in spring"
+];
+const mediumMode = [
+    "the old house stands on a hill overLooking the town",
+    "a gentle breeze rusled the leaves on the tall oak trees",
+    "the chef prepared a delicious meal with fresh ingredients",
+    "children playes happily in the park under the watchful eyes of their parents",
+    "the scientist conducted an experiment in the well-equipped laboratory",
+    "music filled the air as the band played their favorite song"
+];
+const hardMode = [
+    "the juxtaposition of constrasting elements created a visually stunning effect",
+    "unforeseen circumstances necessitated a reevaluation of the initial strategy",
+    "the complexities of quantum physics often challenge conventional understanding",
+    "her perspicacity allowed her to quickly grasp the nuances of the situation",
+    "the ephemeral nature of beauty underscores the importance of cherishing the present moment",
+    "his eloquent articulation of intricate ideas captivated the audience"
+]
 // Generate a random word from the selected mode
-const getRandomWord = (mode) => {
-    const wordList = words[mode];
-    return wordList[Math.floor(Math.random() * wordList.length)];
+const getRandomText = (texts) => {
+    const radomText = Math.floor(Math.random() * texts.length);
+    return texts[radomText];
 };
 
-//
-function generateWords(count, mode) {
-    const generateWords = [];
-    for (let i = 0; i < count; i++) {
-        generateWords.push(getRandomWord(mode));
+function setTextForMode (mode) {
+    if (mode === "easy") {
+        currentTextArray = getRandomText(easyMode).split(" ");
+    } else if (mode === "medium") {
+        currentTextArray = getRandomText(mediumMode).split(" ");
+    } else if (mode === "hard") {
+        currentTextArray = getRandomText(hardMode).split(" ");
     }
-    return generateWords;
+    resetGame();
+    displayWords();
 }
-//
+
+function displayWords() {
+    wordDisplay.innerHTML = "";
+    currentTextArray.forEach((word, index) => {
+        const wordSpan = document.createElement("span");
+        wordSpan.textContent = word + " ";
+        wordSpan.id = `word-${index}`;
+        wordDisplay.appendChild(wordSpan);
+    });
+    highlightNextWord();
+}
 
 // Highlight the current word
 const highlightNextWord = () => {
-    const wordElements = wordDisplay.children;
-    if (currentWordIndex < wordElements.length) {
-            wordElements[currentWordIndex].classList.add("current-highlight");
-            previousEndTime = currentWordIndex;
-        }
-    if (previousEndTime > 0) {
-        if (previousEndTime !== null && wordElements[previousEndTime]) {
-            wordElements[previousEndTime].classList.remove("current-highlight");
-    }
+    const currentWordSpan = document.getElementById(`word-${currentWordIndex}`);
+    if (currentWordSpan) {
+        currentWordSpan.classList.add("current-highlight")
     }
 };
 
 // Move to the next word and update stats only on spacebar press
-const updateWord = (event) => {
-    wordDisplay.innerHTML = "";
-    currentWords.forEach((word, index) => {
-        const span = document.createElement("span");
-        span.textContent = word + " ";
-        wordDisplay.appendChild(span);
-        let wordCorrect = 0;
-        if (typedWords[index] && typedWords[index === word]) {
-            typedWords.style.color = "yellow";
-            wordCorrect++;
-            correct.textContent = wordCorrect
-        } else if (typedWords[index]) {
-            span.classList.add("incorrect");
-        }
-        wordDisplay.appendChild(span);
-    });
-    highlightNextWord();
-}
-//calculate accuracy
-function calculateAccuracy() {
-    let correctCount = 0;
-    for (let i = 0; i < typedWords.length && i < currentWords.length; i++) {
-        if (typedWords[i] === currentWordIndex[i]) {
-            correctCount++;
-        }
+function updateWord(isCorrect) {
+    const wordSpan = document.getElementById(`word-${currentWordIndex}`);
+    if (wordSpan) {
+        wordSpan.classList.add(isCorrect ? "correct" : "incorrect")
     }
-    return currentWords.length > 0 ? Math.round((correctCount / currentWords.length) * 100) : 0;
-}
-function updateResults() {
-    const accuracy = calculateAccuracy();
-    accuracy_html.textContent = `${accuracy}%`;
 }
 
-//
+function updateTimer() {
+    timerDisplay.textContent = timeLeft;
+    if (timeLeft <= 10) {
+        timerDisplay.style.color = "red";
+    } else {
+        timerDisplay.style.color = "";
+    }
+}
+
 // Initialize the typing test
 const startTest = () => {
-    start = true;
-    currentWords = generateWords(10, modeSelect.value);
-    typedWords = [];
-    updateWord();
+    started = true;
+    startTime = new Date().getTime();
+    resetGame();
+    setTextForMode(modeSelect.value);
+   // currentWords = generateWords(10, modeSelect.value);
     inputField.value = "";
     inputField.focus();
+
     results.classList.add("hidden");
-    timeLeft = 5;
+    
     timerDisplay.textContent = timeLeft;
+
+    timeLeft = 60;
+    updateTimer();
     clearInterval(countdownInterval);
     countdownInterval = setInterval(() => {
         timeLeft--;
-        timerDisplay.textContent = timeLeft;
-        if (timeLeft === 0) {
+        updateTimer();
+        if (timeLeft <= 0) {
             clearInterval(countdownInterval);
             endTest();
         }
-        if (timeLeft <= 10) {
-            timerDisplay.style.color = "red";
-        } else {
-            timerDisplay.style.color = "";
-        }
     }, 1000);
+    startButton.disabled = true;
 }
 
 function endTest() {
-    start = false;
+    started = false;
+    endTime = new Date().getTime();
     clearInterval(countdownInterval);
     inputField.disabled = true;
-
-    const wordsPerMinute = Math.round((typedWords.length / (60 - timeLeft)) * 60) || 0;
-    wpm_html.textContent = wordsPerMinute;
-    updateResults();
-    results.classList.remove("hidden");
+    calculateResults();
+    resultsDiv.classList.add("results-active");
+    startButton.disabled = false;
 }
 
-inputField.addEventListener("input", () => {
-    if (!start) return;
-    typedWords = inputField.value.trim().split(/\s+/);
-    updateWord();
-    updateResults();
+function calculateResults() {
+    const timeElapsed = (endTime - startTime) / 60000;
+    const wordsPerMinute = timeElapsed > 0 ? Math.round((totalTypedCharacters / 5) / timeElapsed) : 0;
+    wpmDisplay.textContent = wordsPerMinute;
+    accuracyDisplay.textContent = calculateAccuracy() + "%";
+    correctCountDisplay.textContent = correctWord;
+    incorrectCountDisplay.textContent = incorrectWord;
+}
+function calculateAccuracy() {
+    return totalTypedCharacters > 0 ? Math.round((((totalTypedCharacters - incorrectWord) > 0 ? (totalTypedCharacters - incorrectWord) : 0) / totalTypedCharacters) * 100) : 0;
+}
+inputField.addEventListener("input", (event) => {
+    event.preventDefault();
 
-    const inputValue = inputField.value;
-    const currentWord = currentWords[currentWordIndex];
+    if (!started) return;
+
+    const typedValue = inputField.value;
+    const currentWord = currentTextArray[currentWordIndex];
     const currentWordSpan = wordDisplay.children[currentWordIndex];
-    if (currentWordSpan) {
-        currentWordSpan.innerHTML = "";
-        for (let i = 0; i < currentWord.length; i++) {
-            const charSpan = document.createElement("span");
-            charSpan.textContent = currentWord[i];
-            if (i < inputValue.length && inputValue[i] === currentWord[i]) {
+
+    if (!currentWordSpan) return;
+
+    let correctCharsInWord = 0;
+
+    currentWordSpan.innerHTML = "";
+
+    for (let i = 0; i < currentWord.length; i++) {
+        const charSpan = document.createElement("span");
+        charSpan.textContent = currentWord[i];
+
+        if (i < typedValue.length) {
+            if (typedValue[i] === currentWord[i]) {
                 charSpan.classList.add("correct");
-            } else if (i < inputValue.length) {
+                correctCharsInWord++;
+            } else {
                 charSpan.classList.add("incorrect");
             }
-            currentWordSpan.appendChild(charSpan);
+        }
+        currentWordSpan.appendChild(charSpan);
+    }
+    if (typedValue.length > currentWord.length && !typedValue.endsWith(" ")) {
+        incorrectWord++;
+    }
+
+    if (typedValue === currentWord + " ") {
+        if (typedValue.trim() === currentWord) {
+            correctWord++;
+        } else {
+            incorrectWord++;
+        }
+
+
+        totalTypedCharacters += typedValue.length;
+        inputField.value = "";
+        currentWordIndex++;
+
+        if (currentWordIndex < currentTextArray.length) {
+            highlightNextWord();
+        } else {
+            endTest();
         }
     }
 
-    if(typedWords.length === currentWords.length) {
-        endTest();
-    }
-})
-
-inputField.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-        event.preventDefault();
-        if (typedWords.length > 0 && typedWords[typedWords.length - 1] === currentWords[currentWordIndex]) {
-            inputField.value = "";
-            currentWordIndex++;
-            if (currentWordIndex < currentWords.length) {
-                typedWords.push("");
-                updateWord();
-            } else {
-                endTest();
-            }
-        }
-    }
+    updateResultsDisplay();
 });
 
+
+function updateResultsDisplay() {
+    correctCountDisplay.textContent = correctWord;
+    incorrectCountDisplay.textContent = incorrectWord;
+    accuracyDisplay.textContent = calculateAccuracy() + "%";
+}
+
+function resetGame() {
+    clearInterval(countdownInterval);
+    startTime= null;
+    endTime = null;
+    totalTypedCharacters = 0;
+    currentWordIndex = 0;
+    timeLeft = 60;
+    correctWord = 0;
+    incorrectWord = 0;
+    inputField.value = "";
+    wordDisplay.innerHTML = "";
+    timerDisplay.style.color = "";
+    updateTimer();
+    resultsDiv.classList.remove("results-active");
+    inputField.disabled = false;
+    startButton.disabled = false;
+}
+
+    restartButton.addEventListener("click", () => {
+        resetGame();
+    });
+
+
+    modeSelect.addEventListener("change", (event) => {
+        setTextForMode(event.target.value);
+    });
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    setTextForMode(modeSelect.value);
+    inputField.focus();
+})
+
+
+//Maintain mode after page refreshment
 modeSelect.addEventListener("change", () => {
-    if (start) {
+    if (started) {
         clearInterval(countdownInterval);
-        start = false;
-        results.classList.add("hidden");
+        started = false;
     }
     startTest();
 });
 
 startButton.addEventListener("click", startTest);
-restartButton.addEventListener("click", startTest);
+restartButton.addEventListener("click", () => {
+    startTest();
+    results.classList.remove("results-active");
+});
 
 if (localStorage.getItem("mode")) {
     modeSelect.value = localStorage.getItem("mode");
@@ -196,7 +279,10 @@ modeSelect.addEventListener("change", () => {
     localStorage.setItem("mode", modeSelect.value);
 });
 
-startTest();
+startButton.addEventListener("click", () => {
+    startTest;
+    startButton.classList.add("buttonStart-active")
+});
 
 //Code of keyboard
 const keyboard = document.querySelector(".keyboard");
