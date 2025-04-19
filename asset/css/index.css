@@ -3,12 +3,7 @@
     margin: 0;
     font-family: sans-serif;
 }
-body {
-    background: black;
-    min-height: 100vh;
-    background-size: 125%;
-    backdrop-filter: blur(100px);
-}
+
 #word-display {
     font-size: 1.5em;
     margin-bottom: 20px;
@@ -23,12 +18,60 @@ body {
     width: 300px;
     color: white;
 }
+.buttonStart-active {
+    display: none;
+}
 #timer {
-    font-size: 1.2em;
-    margin-bottom: 10px;
+    font-size: 1.5em;
+    margin-bottom: 0px;
+    position: absolute;
+    text-shadow: 0px 3px 5px   #b30202;
+    top: 17vh;
+    left: 10vw;
+}
+#start-button{
+    color: #eee;
+    font-weight: bolder;
+    font-size: 0.5em;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: large; 
+    border: 0px;
+    box-shadow:3px 3px  #b30202;
+    background-color: rgba(0, 0, 0, 0.288);
+    border-radius: 10vh;
+    position: absolute;
+    top: 15vh;
+    left: 66vw;
+
+    
+}
+.changeText{
+    color: #eee;
+    font-weight: bolder;
+    font-size: 0.5em;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: large; 
+    border: 0px;
+    box-shadow:3px 3px  #b30202;
+    background-color: rgba(0, 0, 0, 0.288);
+    border-radius: 10vh;
+    position: absolute;
+    top: 15vh;
+    left: 73vw;
+
+}
+.changeText:hover{
+    font-size: 0.8em;
+    background-color: rgba(58, 58, 58, 0.288);
+}
+#start-button:hover{
+    font-size: 0.8em;
+    background-color: rgba(58, 58, 58, 0.288);
+
 }
 #results {
-    margin-top: 20px;
+    margin-top: 0px;
+    margin-bottom: 1vh;
 }
 .header {
     margin-top: 10px;
@@ -44,6 +87,10 @@ body {
     background-color: #9e02b305;
     box-shadow:1px 2px #b30202;
     border-radius: 10vh;
+}
+#mode{
+    background-color: black;
+    
 }
 select{
     color: #ffffff; /* Couleur du texte */
@@ -71,9 +118,11 @@ select{
     margin-bottom: 1.5vh;
 }
 .navbar {
-    background-color: rgba(148, 147, 147, 0.575);
+    color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255);
     margin-top: 40px;
-    margin-inline: 300px;
+    width: 50%;
+    margin-left: 15vw;
     border-radius: 20px;
 }
 .main {
@@ -87,35 +136,39 @@ select{
 input{
     padding-top: 1vh;
     padding-bottom: 1vh;
-    margin-top: 10vh;
-    margin-bottom: 1vh;
+    margin-top: 1vh;
+    margin-bottom: 2vh;
+    margin-left: 9vw;
     padding-left: 1vw;
     border-radius: 20vh;
-    border-color: blue;
+    border: 0.5px black;
     color: white;
-    background-color: rgba(0, 0, 255, 0.144);
-    font-size: 25px;
+    background-color: rgba(4, 4, 44, 0.144);
+    font-size: 20px;
+    box-shadow: 0px 0px 3px 3px rgb(139, 8, 8);
 }
 .correct {
-    color: rgb(70, 73, 70);
+    color: green;
 }
 .incorrect {
     color: red
 }
 .current-highlight {
     background-color: yellow;
+    color: pink;
 }
-.keyboard_end {
+.results {
     display: none;
 }
-.hidden {
-    display: none;
+.results-active {
+    display: block;
 }
 .keyboard {
     display: flex;
     flex-direction: column;
     gap: 3px;
     margin-inline: 400px;
+    
     
     
 }
@@ -153,15 +206,15 @@ button.space {
 button.active {
     background-color: rgba(255, 0, 0, 0.829);
 }
-.fa-solid{
+.fa-keyboard{
     margin-top: 2vh;
     font-size: 25px;
     position: absolute;
     margin-left: 70%;
     color: aliceblue;
 }
-.fa-solid:hover{
-    color: rgb(255, 0, 0);
+.fa-keyboard:hover{
+    color: #b30202;
 }
 .fa-crown{
     margin-top: 1.5vh;
@@ -170,6 +223,9 @@ button.active {
     margin-left: 75%;
     color: aliceblue;
 }
+.fa-crown:hover{
+    color: #b30202;
+}
 .fa-wrench{
     margin-top: 1.8vh;
     font-size: 21px;
@@ -177,12 +233,19 @@ button.active {
     margin-left: 80%;
     color: aliceblue;
 }
+.fa-wrench:hover{
+    color: #b30202;
+}
 .fa-arrows-rotate{
-    margin-top: 2vh;
-    font-size: 21px;
+    
+    font-size: 40px;
     position: absolute;
-    margin-left: 80%;
+    top: 16.5vh;
+    left: 68vw;
     color: aliceblue;
+}
+.fa-arrows-rotate:hover{
+    color: #b30202;
 }
 .logo{
     border-radius: 50%;

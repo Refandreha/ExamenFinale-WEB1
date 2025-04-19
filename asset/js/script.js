@@ -125,7 +125,6 @@ function endTest() {
     start = false;
     clearInterval(countdownInterval);
     inputField.disabled = true;
-
     const wordsPerMinute = Math.round((typedWords.length / (60 - timeLeft)) * 60) || 0;
     wpm_html.textContent = wordsPerMinute;
     updateResults();
