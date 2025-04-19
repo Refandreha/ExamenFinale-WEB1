@@ -20,17 +20,6 @@ const correctCountDisplay = document.getElementById("correct");
 const incorrectCountDisplay = document.getElementById("incorrect");
 const startButton = document.getElementById("start-button");
 const restartButton = document.getElementById("restart-button");
-<<<<<<< HEAD
-
-=======
-/*
-const words = {
-    easy: ["apple", "banana", "grape", "orange", "cherry"],
-    medium: ["keyboard", "monitor", "printer", "charger", "battery"],
-    hard: ["synchronize", "complicated", "development", "extravagant", "misconception"]
-};
-*/
->>>>>>> RantoSTD24122
 const easyMode = [
     "the sun is bright",
     "a bird sings sweetly",
@@ -67,7 +56,6 @@ function setTextForMode (mode) {
         currentTextArray = getRandomText(mediumMode).split(" ");
     } else if (mode === "hard") {
         currentTextArray = getRandomText(hardMode).split(" ");
-<<<<<<< HEAD
     }
     resetGame();
     displayWords();
@@ -87,8 +75,6 @@ function generateWords(count, mode) {
     const generateWords = [];
     for(let i = 0; i < count; i++) {
         generateWords.push(getRandomText(mode));
-=======
->>>>>>> RantoSTD24122
     }
     resetGame();
     displayWords();
@@ -109,7 +95,6 @@ function displayWords() {
 const highlightNextWord = () => {
     const currentWordSpan = document.getElementById(`word-${currentWordIndex}`);
     if (currentWordSpan) {
-<<<<<<< HEAD
         if (previousEndTime !== null) {
             const previousWordSpan = document.getElementById(`word-${previousEndTime}`);
             if (previousWordSpan) {
@@ -118,9 +103,6 @@ const highlightNextWord = () => {
         }
         currentWordSpan.classList.add("current-highlight");
         previousEndTime = currentWordIndex;
-=======
-        currentWordSpan.classList.add("current-highlight")
->>>>>>> RantoSTD24122
     }
 };
 
@@ -129,7 +111,6 @@ function updateWord(isCorrect) {
     const wordSpan = document.getElementById(`word-${currentWordIndex}`);
     if (wordSpan) {
         wordSpan.classList.add(isCorrect ? "correct" : "incorrect")
-<<<<<<< HEAD
     }
 }
 
@@ -145,9 +126,7 @@ function updateTimer() {
 const startTest = () => {
     wordDisplay.classList.add("word-display-active");
     restartButton.classList.add("restart-button-active");
-=======
     }
-}
 
 function updateTimer() {
     timerDisplay.textContent = timeLeft;
@@ -160,15 +139,10 @@ function updateTimer() {
 
 // Initialize the typing test
 const startTest = () => {
->>>>>>> RantoSTD24122
     started = true;
     startTime = new Date().getTime();
     resetGame();
     setTextForMode(modeSelect.value);
-<<<<<<< HEAD
-=======
-   // currentWords = generateWords(10, modeSelect.value);
->>>>>>> RantoSTD24122
     inputField.value = "";
     inputField.focus();
 
@@ -188,12 +162,8 @@ const startTest = () => {
         }
     }, 1000);
     startButton.disabled = true;
-<<<<<<< HEAD
 };
-=======
-}
 
->>>>>>> RantoSTD24122
 function endTest() {
     started = false;
     endTime = new Date().getTime();
@@ -202,7 +172,6 @@ function endTest() {
     calculateResults();
     resultsDiv.classList.add("results-active");
     startButton.disabled = false;
-<<<<<<< HEAD
 }
 function calculateWpm(timeElapsed) {
     if (!timeElapsed) return 0;
@@ -221,10 +190,6 @@ function calculateAccuracy() {
     return totalTypedCharacters > 0 ? Math.round((((totalTypedCharacters - incorrectWord) > 0 ? (totalTypedCharacters - incorrectWord) : 0) / totalTypedCharacters) * 100) : 0;
 }
 
-inputField.addEventListener("input", (event) => {
-    if (!started) return;
-=======
-}
 
 function calculateResults() {
     const timeElapsed = (endTime - startTime) / 60000;
@@ -241,21 +206,17 @@ inputField.addEventListener("input", (event) => {
     event.preventDefault();
 
     if (!started) return;
-
->>>>>>> RantoSTD24122
     const typedValue = inputField.value;
     const currentWord = currentTextArray[currentWordIndex];
     const currentWordSpan = wordDisplay.children[currentWordIndex];
 
     if (!currentWordSpan) return;
-<<<<<<< HEAD
     let correctCharsInWord = 0;
     currentWordSpan.innerHTML = "";
     let isCorrect = false;
     for (let i = 0; i < currentWord.length; i++) {
         const charSpan = document.createElement("span");
         charSpan.textContent = currentWord[i];
-=======
 
     let correctCharsInWord = 0;
 
@@ -265,7 +226,6 @@ inputField.addEventListener("input", (event) => {
         const charSpan = document.createElement("span");
         charSpan.textContent = currentWord[i];
 
->>>>>>> RantoSTD24122
         if (i < typedValue.length) {
             if (typedValue[i] === currentWord[i]) {
                 charSpan.classList.add("correct");
@@ -273,8 +233,6 @@ inputField.addEventListener("input", (event) => {
             } else {
                 charSpan.classList.add("incorrect");
             }
-<<<<<<< HEAD
-=======
         }
         currentWordSpan.appendChild(charSpan);
     }
@@ -298,11 +256,9 @@ inputField.addEventListener("input", (event) => {
             highlightNextWord();
         } else {
             endTest();
->>>>>>> RantoSTD24122
         }
         currentWordSpan.appendChild(charSpan);
     }
-<<<<<<< HEAD
     if (typedValue.length === currentWord.length && typedValue === currentWord) {
         isCorrect = true;
     }
@@ -321,11 +277,8 @@ inputField.addEventListener("input", (event) => {
                 endTest();
             }
     }
-=======
-
->>>>>>> RantoSTD24122
     updateResultsDisplay();
-});
+}});
 
 
 function updateResultsDisplay() {
@@ -353,22 +306,15 @@ function resetGame() {
 }
 
     restartButton.addEventListener("click", () => {
-<<<<<<< HEAD
         startTest();
-=======
-        resetGame();
->>>>>>> RantoSTD24122
     });
 
 
     modeSelect.addEventListener("change", (event) => {
-<<<<<<< HEAD
         if (started) {
             clearInterval(correctCountDisplay);
             started = false;
         }
-=======
->>>>>>> RantoSTD24122
         setTextForMode(event.target.value);
     });
 
@@ -379,11 +325,7 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 
-<<<<<<< HEAD
 //Maintain mode after page refresh
-=======
-//Maintain mode after page refreshment
->>>>>>> RantoSTD24122
 modeSelect.addEventListener("change", () => {
     if (started) {
         clearInterval(countdownInterval);
